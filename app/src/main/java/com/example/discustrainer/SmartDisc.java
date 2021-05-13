@@ -9,13 +9,9 @@ import android.bluetooth.BluetoothProfile;
 import android.content.Context;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
-
-import java.lang.reflect.Array;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -58,8 +54,8 @@ public final class SmartDisc{
         final boolean success = gattDevice.writeCharacteristic(mUartTxCharacteristic);
     }
 
-    private List<DiscusPosListener> discusPosListeners = new ArrayList<DiscusPosListener>();
-    public void addDataListener(DiscusPosListener discusPosListener){
+    private List<DiscusEventListener> discusPosListeners = new ArrayList<DiscusEventListener>();
+    public void addDataListener(DiscusEventListener discusPosListener){
         discusPosListeners.add(discusPosListener);
     }
 
@@ -143,8 +139,8 @@ public final class SmartDisc{
                             cmdData[2] = ByteBuffer.wrap(toByteArray(fullPacket.subList(13,17))).order(ByteOrder.LITTLE_ENDIAN).getFloat();
                             cmdData[3] = ByteBuffer.wrap(toByteArray(fullPacket.subList(17,21))).order(ByteOrder.LITTLE_ENDIAN).getFloat();
 //                            Log.d("data", String.valueOf(timeStamp));
-                            for(DiscusPosListener listener : discusPosListeners){
-                                    listener.newData(timeStamp, cmdType, cmdData);
+                            for(DiscusEventListener listener : discusPosListeners){
+                                    listener.newData(new DiscusEventData(timeStamp, cmdType, cmdData[0], cmdData[1], cmdData[2], cmdData[3]));
                             }
                             fullPacket = new ArrayList<Byte>();
                         }

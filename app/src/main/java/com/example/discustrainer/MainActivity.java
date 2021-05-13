@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
         ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.BLUETOOTH}, 1);
+        ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
 
         SmartDisc disc = new SmartDisc(this, deviceName);
         DiscusData discDataManager = new DiscusData();
@@ -70,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
 
         saveBtn = (Button) findViewById(R.id.saveID);
         saveBtn.setOnClickListener(v -> {
-            Log.d("GPS Coord", discDataManager.gpsCoords.toString());
+            discDataManager.toCsv(getApplicationContext());
         });
     }
 

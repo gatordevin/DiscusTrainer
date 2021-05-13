@@ -64,6 +64,10 @@ dependencies {
     // Needed to download files with SSL on Android 4.4
     implementation 'com.google.android.gms:play-services-auth:18.0.0'
 
+    //CSV
+    implementation group: 'com.opencsv', name: 'opencsv', version: '5.4'
+
+
     // Nordic
     implementation 'no.nordicsemi.android.support.v18:scanner:1.4.3'
     implementation 'no.nordicsemi.android:dfu:1.9.1'
